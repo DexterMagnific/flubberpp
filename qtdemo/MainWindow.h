@@ -22,14 +22,22 @@ class MainWindow : public QMainWindow
     void slot_updateShape(const QVariant &value);
     void slot_interpolationFinished();
     void slot_triggerNextInterpolation();
+    void slot_playBtnClicked(bool);
+    void slot_timeSliderChanged(int value);
+    void slot_nextBtnClicked(bool);
+    void slot_prevBtnClicked(bool);
+    void slot_colorChanged(int idx);
 
   private:
     void convertPaths();
 
     Ui::MainWindow *ui;
+    bool paused;
     flubberpp::SingleInterpolator interp;
-    // animates time
+    // animates time from 0 to 1
     QVariantAnimation timeAnim;
+    // pause timer until next interpolation
+    QTimer *pauseTimer;
     // graphical representation of the shape
     QGraphicsPolygonItem *interpItem;
     unsigned path_idx;
