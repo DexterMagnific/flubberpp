@@ -42,10 +42,10 @@ MainWindow::MainWindow(QWidget *parent)
   ui->playBtn->setFocus();
 
   ui->colorCombo->addItem("Red", QColor(Qt::red));
-  ui->colorCombo->addItem("Green", QColor(Qt::green));
+  ui->colorCombo->addItem("Green", QColor(Qt::darkGreen));
   ui->colorCombo->addItem("Blue", QColor(Qt::blue));
-  ui->colorCombo->addItem("Yellow", QColor(Qt::yellow));
-  ui->colorCombo->addItem("Cyan", QColor(Qt::cyan));
+  ui->colorCombo->addItem("Yellow", QColor(Qt::darkYellow));
+  ui->colorCombo->addItem("Cyan", QColor(Qt::darkCyan));
   ui->colorCombo->addItem("Purple", QColor(QColorConstants::Svg::purple));
 
   // add item to hold interpolated shape
@@ -120,7 +120,7 @@ void MainWindow::convertPaths()
 void MainWindow::slot_updateShape(const QVariant &value)
 {
   if ( !paused ) {
-    // only update slider when "playing", not when changing the slider while paused
+    // only update slider from timeAnim when "playing", not when changing the slider manually
     QSignalBlocker b(ui->timeSlider);
     ui->timeSlider->setValue(value.toFloat()*1000);
   }
@@ -169,7 +169,9 @@ void MainWindow::slot_triggerNextInterpolation()
 
   {
     QSignalBlocker b(ui->timeSlider);
+    QSignalBlocker bb(timeAnim);
     ui->timeSlider->setValue(0);
+    timeAnim.setCurrentTime(0);
   }
 
   if ( !paused )
@@ -205,19 +207,23 @@ void MainWindow::slot_timeSliderChanged(int value)
 
 void MainWindow::slot_nextBtnClicked(bool)
 {
-  timeAnim.stop();
+  if ( timeAnim.state() == QAbstractAnimation::Running )
+    timeAnim.pause();
   slot_triggerNextInterpolation();
 }
 
 void MainWindow::slot_prevBtnClicked(bool)
 {
-  timeAnim.stop();
+  if ( timeAnim.state() == QAbstractAnimation::Running )
+    timeAnim.pause();
   path_idx = (path_idx + shapes.size() - 2)%shapes.size();
   slot_triggerNextInterpolation();
 }
 
 void MainWindow::slot_colorChanged(int idx)
 {
-  //interpItem->setPen(QPen(ui->colorCombo->itemData(idx).value<QColor>().darker(),1.5f));
-  //interpItem->setBrush(QBrush(QColor(ui->colorCombo->itemData(idx).value<QColor>())));
+  QColor c = ui->colorCombo->itemData(idx).value<QColor>();
+  interpItem->setPen(QPen(c,1.5f));
+  c.setAlpha(100);
+  interpItem->setBrush(QBrush(c.lighter()));
 }

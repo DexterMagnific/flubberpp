@@ -1,6 +1,8 @@
 # flubberpp
 This is a C++ port of the flubber (https://github.com/veltman/flubber) shape interpolation library.
 
+![Qt demo app](https://github.com/DexterMagnific/flubberpp/assets/2777588/6879d4dd-bfe0-4413-be13-1750792371b8)
+
 # Contents
 * flubberpp library: C++ only that provides shape interpolation, but no visualization
 * a Qt5 demo app: a demo app that uses flubberpp library to render interpolations

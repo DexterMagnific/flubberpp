@@ -149,36 +149,6 @@
              <height>0</height>
             </size>
            </property>
-           <item>
-            <property name="text">
-             <string>Red</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Green</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Blue</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Yellow</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Cyan</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Purple</string>
-            </property>
-           </item>
           </widget>
          </item>
         </layout>
