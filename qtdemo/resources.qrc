@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/datasets">
+        <file>us-states.json</file>
+        <file>basic-shapes.json</file>
+    </qresource>
+</RCC>

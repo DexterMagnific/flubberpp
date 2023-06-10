@@ -27,10 +27,9 @@ class MainWindow : public QMainWindow
     void slot_nextBtnClicked(bool);
     void slot_prevBtnClicked(bool);
     void slot_colorChanged(int idx);
+    void slot_datasetChanged(int idx);
 
   private:
-    void convertPaths();
-
     Ui::MainWindow *ui;
     bool paused;
     flubberpp::SingleInterpolator interp;
