@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->colorCombo->addItem("Blue", QColor(Qt::blue));
   ui->colorCombo->addItem("Yellow", QColor(Qt::darkYellow));
   ui->colorCombo->addItem("Cyan", QColor(Qt::darkCyan));
-  ui->colorCombo->addItem("Purple", QColor(QColorConstants::Svg::purple));
+  ui->colorCombo->addItem("Magenta", QColor(Qt::magenta));
 
   ui->dataCombo->addItem("Basic shapes", ":/datasets/basic-shapes.json");
   ui->dataCombo->addItem("US States", ":/datasets/us-states.json");
@@ -174,6 +174,12 @@ void MainWindow::slot_playBtnClicked(bool)
 
 void MainWindow::slot_timeSliderChanged(int value)
 {
+  if (  timeAnim.state() == QAbstractAnimation::Stopped) {
+    // this is the case when manipulating the slider and reaching 1 -> animation stops
+    // and we can't setCurrentTime() unless animation is paused.
+    timeAnim.start();
+    timeAnim.pause();
+  }
   timeAnim.setCurrentTime((float)value*timeAnim.duration()/ui->timeSlider->maximum());
 }
 
