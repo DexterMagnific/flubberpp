@@ -1,7 +1,11 @@
 #pragma once
 
 #ifdef FLUBBERPP_LIBRARY
+#if _WIN32
+#define FLUBBERPP_EXPORT __declspec(dllexport)
+#else
 #define FLUBBERPP_EXPORT __attribute__((visibility("default")))
+#endif
 #else
 #define FLUBBERPP_EXPORT
 #endif

@@ -1,7 +1,16 @@
 #pragma once
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
+
 #ifdef FLUBBERPP_LIBRARY
+#if _WIN32
+#define FLUBBERPP_EXPORT __declspec(dllexport)
+#else
 #define FLUBBERPP_EXPORT __attribute__((visibility("default")))
+#endif
 #else
 #define FLUBBERPP_EXPORT
 #endif
@@ -29,6 +38,8 @@ struct FLUBBERPP_EXPORT Point {
     }
     /** Nearly same point */
     bool operator ==(const Point &other) const { return this->distance(other) < 1e-4f; }
+    /** Compare  points */
+    bool operator < (const Point& other) const { return std::tie(x, y) < std::tie(other.x, other.y); }
 };
 
 inline Point operator+(const Point &a, const Point &b) { return Point{a.x+b.x,a.y+b.y}; }
